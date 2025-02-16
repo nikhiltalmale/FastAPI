@@ -73,4 +73,18 @@ async def updatePost(post_id:int,postData:PostBase,db:db_dependency):
     db.commit()
     db.refresh(post)
     
-    return {"message": "Post updated successfully", "post": post}    
+    return {"message": "Post updated successfully", "post": post}  
+
+class ContentUpdate(BaseModel):
+    content : str
+
+@app.patch("/updatePostContent/{post_id}",status_code=status.HTTP_200_OK)
+async def updatePostcontent(post_id:int,postData:ContentUpdate,db:db_dependency):
+    post = db.query(models.Post).filter(models.Post.id == post_id)
+    if post is None:
+        raise HTTPException(status_code=404,detail="post not found")
+    post.content = postData.content
+    db.commit()
+    db.refresh(post)
+    
+    return {"message": "Post content updated successfully", "post": post}  
