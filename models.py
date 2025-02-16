@@ -13,6 +13,6 @@ class Post(Base):
 
     id = Column(Integer,primary_key=True,index=True)
     title = Column(String(50))
-    content = Column(String(50))
+    content = Column(String(300))
     user_id = Column(Integer)
 
