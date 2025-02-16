@@ -80,7 +80,7 @@ class ContentUpdate(BaseModel):
 
 @app.patch("/updatePostContent/{post_id}",status_code=status.HTTP_200_OK)
 async def updatePostcontent(post_id:int,postData:ContentUpdate,db:db_dependency):
-    post = db.query(models.Post).filter(models.Post.id == post_id)
+    post = db.query(models.Post).filter(models.Post.id == post_id).first()
     if post is None:
         raise HTTPException(status_code=404,detail="post not found")
     post.content = postData.content
